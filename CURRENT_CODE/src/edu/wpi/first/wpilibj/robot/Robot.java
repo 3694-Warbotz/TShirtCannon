@@ -3,14 +3,16 @@ package edu.wpi.first.wpilibj.robot;
 
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.commands.ArcadeDrive;
 import edu.wpi.first.wpilibj.commands.Solenoids;
 import edu.wpi.first.wpilibj.commands.TankDrive;
+import edu.wpi.first.wpilibj.commands.runTurrett;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.subsystems.Pneumatics;
+import edu.wpi.first.wpilibj.subsystems.Turrett;
 
 public class Robot extends IterativeRobot {
     
@@ -19,10 +21,8 @@ public class Robot extends IterativeRobot {
     public static OI OI; //Create the OperatorInterface object
     public static Solenoids solenoids; //Create the Solenoids command object
     public static Pneumatics pneumatics; //Create the pneumatics subsystem object
-    
-    //Drive Chooser
-    private SendableChooser teleopChooser; //Create a SendableChooser for choosing drive
-    Command teleopChosen; //Create a teleop command
+    public static Turrett turrett; //Create Turrett subsystem
+    public static runTurrett shoot; //Create runTurrett command object
     
     
     //Runs once on robot start
@@ -32,13 +32,8 @@ public class Robot extends IterativeRobot {
         OI = new OI(); //Instantiate the Operator Interface
         solenoids = new Solenoids(); //Instantiate Solenoids command
         pneumatics = new Pneumatics(); //Instantiate Pneumatics subsystem
-        teleopChooser = new SendableChooser(); //Instantiate the sendable chooser
-        teleopChosen = (Command) teleopChooser.getSelected(); //instantiate the command to be equivalent to the selection for teleop driving
-        
-        //Create the choices for the teleopChooser
-        teleopChooser.addDefault("Tank Drive", new TankDrive()); //Add tank driving as the default choice for drive
-        teleopChooser.addObject("Arcade Drive", new ArcadeDrive()); //Add arcade driving as another choice for drive
-        SmartDashboard.putData("Teleop", teleopChooser); //Post the data from the teleopChooser to the smartdashboard
+        turrett = new Turrett(); //Instantiate turrett command
+        shoot = new runTurrett(); //Instantiate runTurrett command
     }
 
     //runs continuously during autonomous
@@ -48,13 +43,20 @@ public class Robot extends IterativeRobot {
 
     //runs continuously during teleop
     public void teleopPeriodic() {
-        while (isEnabled()) {
-            teleopChosen.start(); //start the teleop command
-            solenoids.solenoidFire(); //Fire the solenoids based on the Solenoids() command
+        pneumatics.compressorStop(); //if not enabled, then don't run the compressors
+        while (isEnabled() && isOperatorControl()) { //while the robot is enabled
+            TankDrive.drive(); //Drive the robot 
+            runTurrett.run(); //run the runTurrett command
+            Pneumatics.compressorStart(); //Start the compressor 
+            while (OI.safety.get() == true) { //while the safety button is pressed
+                solenoids.solenoidFire(); //Fire the solenoids based on the Solenoids() command
+            }
+            if (Pneumatics.isRunning == false) { //if no solenoids are set to be fired
+                Pneumatics.soleTimer.stop(); //stop the timer
+                Pneumatics.soleTimer.reset(); //reset the timer
+            }
         }
-        Pneumatics.compressor.stop();
     }
-    
     //runs continuously during 'test' mode. DO NOT USE!!!
     public void testPeriodic() {
     

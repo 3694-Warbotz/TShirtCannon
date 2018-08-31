@@ -4,8 +4,8 @@ package edu.wpi.first.wpilibj.commands;
 import edu.wpi.first.wpilibj.robot.Robot;
 
 public class Solenoids {
+    public boolean isRunning;
     public static void solenoidFire() { //Command to fire the solenoids based on button input
-       
         if(Robot.OI.soleOne.get() == true) { //if button #1 is being pressed
             Robot.pneumatics.fireOne(); //fireone() command from the pneumatics subsystem
         }

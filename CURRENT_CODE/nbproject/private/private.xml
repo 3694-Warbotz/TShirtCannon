@@ -6,6 +6,11 @@
             <file>file:/C:/Users/zachl/Documents/NetBeansProjects/T-Shirt%20Cannon/src/edu/wpi/first/wpilibj/robot/Robot.java</file>
             <file>file:/C:/Users/zachl/Documents/NetBeansProjects/T-Shirt%20Cannon/src/edu/wpi/first/wpilibj/robot/RobotMap.java</file>
             <file>file:/C:/Users/zachl/Documents/NetBeansProjects/T-Shirt%20Cannon/src/edu/wpi/first/wpilibj/robot/OI.java</file>
+            <file>file:/C:/Users/zachl/Documents/NetBeansProjects/T-Shirt%20Cannon/src/edu/wpi/first/wpilibj/commands/Solenoids.java</file>
+            <file>file:/C:/Users/zachl/Documents/NetBeansProjects/T-Shirt%20Cannon/src/edu/wpi/first/wpilibj/subsystems/DriveTrain.java</file>
+            <file>file:/C:/Users/zachl/Documents/NetBeansProjects/T-Shirt%20Cannon/src/edu/wpi/first/wpilibj/commands/ArcadeDrive.java</file>
+            <file>file:/C:/Users/zachl/Documents/NetBeansProjects/T-Shirt%20Cannon/src/edu/wpi/first/wpilibj/subsystems/Pneumatics.java</file>
+            <file>file:/C:/Users/zachl/Documents/NetBeansProjects/T-Shirt%20Cannon/src/edu/wpi/first/wpilibj/commands/TankDrive.java</file>
         </group>
     </open-files>
 </project-private>
