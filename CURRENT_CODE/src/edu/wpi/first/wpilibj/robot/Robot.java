@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.commands.Solenoids;
 import edu.wpi.first.wpilibj.commands.TankDrive;
 import edu.wpi.first.wpilibj.commands.runTurrett;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.subsystems.Pneumatics;
@@ -35,7 +34,6 @@ public class Robot extends IterativeRobot {
         turrett = new Turrett(); //Instantiate turrett command
         shoot = new runTurrett(); //Instantiate runTurrett command
     }
-
     //runs continuously during autonomous
     public void autonomousPeriodic() {
 
@@ -55,6 +53,36 @@ public class Robot extends IterativeRobot {
                 Pneumatics.soleTimer.stop(); //stop the timer
                 Pneumatics.soleTimer.reset(); //reset the timer
             }
+        }
+        if (pneumatics.oneFired != true) {
+            SmartDashboard.putString("T-Shirt One fired: ", "No");
+    }
+        else if (pneumatics.oneFired == true) {
+            SmartDashboard.putString("T-Shirt One fired: ", "Yes");
+        }
+        if (pneumatics.twoFired != true) {
+            SmartDashboard.putString("T-Shirt Two fired: ", "No");
+        }
+        else if (pneumatics.twoFired == true) {
+            SmartDashboard.putString("T-Shirt Two fired: ", "Yes");
+        }
+        if (pneumatics.threeFired != true) {
+            SmartDashboard.putString("T-Shirt Three fired: ", "No");
+        }
+        else if( pneumatics.threeFired == true) {
+            SmartDashboard.putString("T-Shirt Three fired: ", "Yes");
+        }
+        if (pneumatics.fourFired != true) {
+            SmartDashboard.putString("T-Shirt Four fired: ", "No");
+        }
+        else if (pneumatics.fourFired == true) {
+            SmartDashboard.putString("T-Shirt Four Fired: ", "Yes");
+        }
+        if (pneumatics.fourFired == true && pneumatics.threeFired == true && pneumatics.twoFired == true && pneumatics.oneFired == true) {
+            SmartDashboard.putString("All shirts have been fired. Reload the robot.", "");
+        }
+        else {
+            SmartDashboard.putString("You can keep going!!", "");
         }
     }
     //runs continuously during 'test' mode. DO NOT USE!!!

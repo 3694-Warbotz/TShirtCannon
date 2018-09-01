@@ -16,6 +16,10 @@ public class Pneumatics {
    public static Solenoid four = new Solenoid(RobotMap.soleFour); //Define Solenoid #4
    public static Timer soleTimer = new Timer();
    public static boolean isRunning = false;
+   public static boolean oneFired;
+   public static boolean twoFired;
+   public static boolean threeFired;
+   public static boolean fourFired;
    
 //Void for running the compressor
    public static void compressorStart() {
@@ -37,6 +41,7 @@ public class Pneumatics {
            one.set(true);
        }
        isRunning = true;
+       oneFired = true;
    }
    public static void fireTwo() { //Command to fire solenoid #2
        soleTimer.start(); //start the timer
@@ -49,6 +54,7 @@ public class Pneumatics {
            two.set(true);
        }
        isRunning = true;
+       twoFired = true;
    }
    public static void fireThree() { //Command to fire solenoid #3
        soleTimer.start();
@@ -60,6 +66,7 @@ public class Pneumatics {
            three.set(true);
        }
        isRunning = true;
+       threeFired = true;
    }
    public static void fireFour() { //Command to fire solenoid #4
        soleTimer.start();
@@ -71,5 +78,6 @@ public class Pneumatics {
            four.set(true);
        }
        isRunning = true;
+       fourFired = true;
    }
 }

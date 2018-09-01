@@ -21,4 +21,8 @@ public class RobotMap {
     //Ports for turrett
     public static final int turrett_elevate = 5;
     public static final int turrett_turn = 6;
+    public static final int turrett_turn_right_limit = 7;
+    public static final int turrett_turn_left_limit = 8;
+    public static final int turrett_upper_limit = 9;
+    public static final int turrett_lower_limit = 10;
 }
