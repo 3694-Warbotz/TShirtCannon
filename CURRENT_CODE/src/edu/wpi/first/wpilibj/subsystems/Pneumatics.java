@@ -30,54 +30,37 @@ public class Pneumatics {
        compressorOne.stop(); //turn the compressor off
        compressorTwo.stop(); //turn the compressor off
    }
-   public static void fireOne() { //Command to fire solenoid #1
+   
+   public static void fireSolenoid(Solenoid solenoid, int i){ //Command to fire any solenoid
        soleTimer.start(); //start the timer
        //set all solenoids to be off
-       one.set(false);
-       two.set(false);
-       three.set(false);
-       four.set(false);
+       setSolenoids(false, false, false, false);
        while (soleTimer.get() <= 0.5) { 
-           one.set(true);
+           solenoid.set(true);
        }
        isRunning = true;
-       oneFired = true;
-   }
-   public static void fireTwo() { //Command to fire solenoid #2
-       soleTimer.start(); //start the timer
-       //set all solenoids to be off
-       one.set(false);
-       two.set(false);
-       three.set(false);
-       four.set(false);
-       while (soleTimer.get() <= 0.5) {
-           two.set(true);
+       switch(i){
+           case 1:
+               oneFired = true;
+               break;
+           case 2:
+               twoFired = true;
+               break;
+           case 3:
+               threeFired = true;
+               break;
+           case 4:
+               fourFired = true;
+           default:
+               break;
        }
-       isRunning = true;
-       twoFired = true;
+       //oneFired, etc can be replaced by just using each solenoid's get function when needed
    }
-   public static void fireThree() { //Command to fire solenoid #3
-       soleTimer.start();
-       one.set(false);
-       two.set(false);
-       three.set(false);
-       four.set(false);
-       while (soleTimer.get() <= 0.5) {
-           three.set(true);
-       }
-       isRunning = true;
-       threeFired = true;
-   }
-   public static void fireFour() { //Command to fire solenoid #4
-       soleTimer.start();
-       one.set(false);
-       two.set(false);
-       three.set(false);
-       four.set(false);
-       while (soleTimer.get() <= 0.5) {
-           four.set(true);
-       }
-       isRunning = true;
-       fourFired = true;
-   }
+   
+   public static void setSolenoids(boolean value_1, boolean value_2, boolean value_3, boolean value_4){ //Set solenoid values
+       one.set(value_1);
+       two.set(value_2);
+       three.set(value_3);
+       four.set(value_4);
+    }
 }

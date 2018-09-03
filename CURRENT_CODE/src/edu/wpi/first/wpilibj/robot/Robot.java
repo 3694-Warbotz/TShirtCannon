@@ -54,31 +54,12 @@ public class Robot extends IterativeRobot {
                 Pneumatics.soleTimer.reset(); //reset the timer
             }
         }
-        if (pneumatics.oneFired != true) {
-            SmartDashboard.putString("T-Shirt One fired: ", "No");
-    }
-        else if (pneumatics.oneFired == true) {
-            SmartDashboard.putString("T-Shirt One fired: ", "Yes");
-        }
-        if (pneumatics.twoFired != true) {
-            SmartDashboard.putString("T-Shirt Two fired: ", "No");
-        }
-        else if (pneumatics.twoFired == true) {
-            SmartDashboard.putString("T-Shirt Two fired: ", "Yes");
-        }
-        if (pneumatics.threeFired != true) {
-            SmartDashboard.putString("T-Shirt Three fired: ", "No");
-        }
-        else if( pneumatics.threeFired == true) {
-            SmartDashboard.putString("T-Shirt Three fired: ", "Yes");
-        }
-        if (pneumatics.fourFired != true) {
-            SmartDashboard.putString("T-Shirt Four fired: ", "No");
-        }
-        else if (pneumatics.fourFired == true) {
-            SmartDashboard.putString("T-Shirt Four Fired: ", "Yes");
-        }
-        if (pneumatics.fourFired == true && pneumatics.threeFired == true && pneumatics.twoFired == true && pneumatics.oneFired == true) {
+        SmartDashboard.putBoolean("T-Shirt One fired: ", pneumatics.oneFired);
+        SmartDashboard.putBoolean("T-Shirt Two fired: ", pneumatics.twoFired);
+        SmartDashboard.putBoolean("T-Shirt Three fired: ", pneumatics.threeFired);
+        SmartDashboard.putBoolean("T-Shirt Four fired: ", pneumatics.fourFired);
+
+        if (pneumatics.oneFired && pneumatics.twoFired && pneumatics.threeFired && pneumatics.fourFired) {
             SmartDashboard.putString("All shirts have been fired. Reload the robot.", "");
         }
         else {
