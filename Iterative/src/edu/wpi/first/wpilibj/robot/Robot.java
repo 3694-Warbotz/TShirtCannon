@@ -3,6 +3,7 @@ package edu.wpi.first.wpilibj.robot;
 
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
@@ -38,13 +39,19 @@ public class Robot extends IterativeRobot {
     public Relay soleTwo; //Spike relay for Solenoid #2
     public Relay soleThree; //Spike relay for Solenoid #3
     public Relay soleFour; //Spike relay for Solenoid #4
+    
+    //Define limit switches
+    public DigitalInput turnLeft;
+    public DigitalInput turnRight;
+    public DigitalInput elevateUpper;
+    public DigitalInput elevateLower;
 
     public void robotInit() {
-        leftDrive = new Victor(1); //left victor is on PWM port 1
-        rightDrive = new Victor(2); //right victor is on PWM port 2
+        leftDrive = new Victor(Ports.leftDrive); //left victor is on PWM port 1
+        rightDrive = new Victor(Ports.rightDrive); //right victor is on PWM port 2
         
-        turrettElevate = new Victor(9); //elevator victor is on PWM port 9
-        turrettTurn = new Victor(10); //turn victor is on PWM port 10
+        turrettElevate = new Victor(Ports.turrettElevate); //elevator victor is on PWM port 9
+        turrettTurn = new Victor(Ports.turrettTurn); //turn victor is on PWM port 10
         
         leftStick = new Joystick(1); //leftstick is on PC port 1
         rightStick = new Joystick(2); //rightstick is on PC port 2
@@ -55,13 +62,18 @@ public class Robot extends IterativeRobot {
         fireFour = new JoystickButton(leftStick, 5); //firefour is button 5 on the leftstick
         turrettSafety = new JoystickButton(rightStick, 1); //turrettsafety is button 1 on the rightstick
         
-        leftCompressor = new Compressor(1, 3); //left side compressor is on digital input port 1 with a Spike relay on PWM 3
-        rightCompressor = new Compressor(2, 4); //right side compressor is on digital input port 2 with a Spike relay on PWM 4
+        leftCompressor = new Compressor(Ports.leftcompressor_digitalInput, Ports.leftCompressor_relay); //left side compressor is on digital input port 1 with a Spike relay on PWM 3
+        rightCompressor = new Compressor(Ports.rightCompressor_digitalInput, Ports.rightCompressor_relay); //right side compressor is on digital input port 2 with a Spike relay on PWM 4
         
-        soleOne = new Relay(5); //soleone is on PWM port 5
-        soleTwo = new Relay(6); //soletwo is on PWM port 6
-        soleThree = new Relay(7); //solethree is on PWM port 7
-        soleFour = new Relay(8); //solefour is on PWM port 8
+        soleOne = new Relay(Ports.soleOne); //soleone is on PWM port 5
+        soleTwo = new Relay(Ports.soleTwo); //soletwo is on PWM port 6
+        soleThree = new Relay(Ports.soleThree); //solethree is on PWM port 7
+        soleFour = new Relay(Ports.soleFour); //solefour is on PWM port 8
+        
+        turnLeft = new DigitalInput(Ports.turnLeft);
+        turnRight = new DigitalInput(Ports.turnRight);
+        elevateUpper = new DigitalInput(Ports.elevateUpper);
+        elevateLower = new DigitalInput(Ports.elevateLower);
     }
 
     public void autonomousPeriodic() {
@@ -88,6 +100,22 @@ public class Robot extends IterativeRobot {
                 leftDrive.set(0.0); //set the left motor to be 0 speed
                 rightDrive.set(0.0); //set the rigtht motor to be 0 speed
             }
+            if (elevateUpper.get() == true) { //if the upper limit switch is pressed
+                turrettElevate.set(-.15);
+                    Timer.delay(0.25);
+            }
+             if (elevateLower.get() == true) { //if the lower limit switch is pressed
+                turrettElevate.set(.15);
+                    Timer.delay(0.25);
+            }
+            if (turnRight.get() == true) { //if the right limit switch is pressed
+                turrettTurn.set(-.15);
+                    Timer.delay(0.25);
+            }
+            if (turnLeft.get() == true) { //if the left limit switch is pressed
+                turrettTurn.set(.15);
+                    Timer.delay(0.25);
+            }
             while (soleSafety.get() == true) { // while the safety button is pressed
                 if (fireOne.get() == true) { //if fireone is pressed
                     soleOne.set(Relay.Value.kOn); //set the relay value to on
@@ -113,8 +141,11 @@ public class Robot extends IterativeRobot {
         }
     
     
-    public void testPeriodic() {
-    
+    public void testPeriodic() { //for testing crio functions
+        leftCompressor.stop();
+        rightCompressor.stop();
+        leftDrive.set(0.35);
+        rightDrive.set(0.35);
     }
     
 }
