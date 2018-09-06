@@ -2,8 +2,8 @@
 package edu.wpi.first.wpilibj.robot;
 
 public class Ports {
-    public static int leftDrive = 1;
-    public static int rightDrive = 2;
+    public static int leftDrive = 2;
+    public static int rightDrive = 1;
     public static int leftCompressor_relay = 3;
     public static int leftcompressor_digitalInput = 1;
     public static int rightCompressor_relay = 4;
